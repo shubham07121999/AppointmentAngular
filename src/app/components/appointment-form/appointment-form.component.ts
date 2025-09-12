@@ -23,28 +23,28 @@ export class AppointmentFormComponent {
     });
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.appointmentService.editAppointment$.subscribe((appt: Appointment) => {
-    this.editMode = true;
-    this.editId = appt.id;
-    this.appointmentForm.patchValue(appt);
-  });
+      this.editMode = true;
+      this.editId = appt.id;
+      this.appointmentForm.patchValue(appt);
+    });
   }
 
   onSubmit() {
     if (this.appointmentForm.valid) {
-        const start = this.appointmentForm.get('startTime')?.value;
-        const end = this.appointmentForm.get('endTime')?.value;
+      const start = this.appointmentForm.get('startTime')?.value;
+      const end = this.appointmentForm.get('endTime')?.value;
 
-        if (start && end && new Date(start) >= new Date(end)) {
-          alert('End Time must be greater than Start Time');
-          return;
-        }
-        
-       if (this.editMode && this.editId) {
+      if (start && end && new Date(start) >= new Date(end)) {
+        alert('End Time must be greater than Start Time');
+        return;
+      }
+
+      if (this.editMode && this.editId) {
         this.appointmentService.updateAppointment(this.editId, this.appointmentForm.value)
           .subscribe(
-        {
+            {
               next: () => {
                 alert('Appointment updated successfully!');
                 this.appointmentForm.reset();
@@ -57,22 +57,22 @@ export class AppointmentFormComponent {
                 }
               }
             }
-        );
-        }else{
-            this.appointmentService.createAppointment(this.appointmentForm.value).subscribe({
-              next: () => {
-                alert('Appointment booked successfully!');
-                this.appointmentForm.reset();
-                this.editMode = false;
-                this.editId = undefined;
-              },
-              error: (err) => {
-                if (err.status === 400 && err.error) {
-                  alert(err.error)
-                }
-              }
-            });
-        }
+          );
+      } else {
+        this.appointmentService.createAppointment(this.appointmentForm.value).subscribe({
+          next: () => {
+            alert('Appointment booked successfully!');
+            this.appointmentForm.reset();
+            this.editMode = false;
+            this.editId = undefined;
+          },
+          error: (err) => {
+            if (err.status === 400 && err.error) {
+              alert(err.error)
+            }
+          }
+        });
+      }
     }
   }
 }

@@ -10,8 +10,8 @@ import { AppointmentService } from 'src/app/services/appointment.service';
 })
 export class AppointmentListComponent {
   appointments: Appointment[] = [];
-private subscription!: Subscription;
-  constructor(private appointmentService: AppointmentService) {}
+  private subscription!: Subscription;
+  constructor(private appointmentService: AppointmentService) { }
 
   ngOnInit(): void {
     this.loadAppointments();
@@ -27,15 +27,15 @@ private subscription!: Subscription;
   }
 
   deleteAppointment(id: number) {
-    if(confirm("Are you sure you want to cancel?")){
+    if (confirm("Are you sure you want to cancel?")) {
       this.appointmentService.deleteAppointment(id).subscribe(() => {
-      this.loadAppointments();
-    });
+        this.loadAppointments();
+      });
     }
   }
 
-   changeAppointment(appt:Appointment) {
-      this.appointmentService.sendEditAppointment(appt);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  changeAppointment(appt: Appointment) {
+    this.appointmentService.sendEditAppointment(appt);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
