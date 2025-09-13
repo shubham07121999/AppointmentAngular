@@ -3,23 +3,44 @@
   <h2 *ngIf="editMode">Edit Appointment</h2>
 
   <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+    
     <div class="mb-3">
       <label>Patient Name</label>
       <input class="form-control w-50" formControlName="patientName">
+      <div class="text-danger" 
+           *ngIf="appointmentForm.get('patientName')?.touched && appointmentForm.get('patientName')?.hasError('required')">
+        Patient Name is required.
+      </div>
     </div>
+
     <div class="mb-3">
       <label>Doctor Name</label>
       <input class="form-control w-50" formControlName="doctorName">
+      <div class="text-danger" 
+           *ngIf="appointmentForm.get('doctorName')?.touched && appointmentForm.get('doctorName')?.hasError('required')">
+        Doctor Name is required.
+      </div>
     </div>
+
     <div class="mb-3">
       <label>Start Time</label>
       <input type="datetime-local" class="form-control w-50" formControlName="startTime">
+      <div class="text-danger" 
+           *ngIf="appointmentForm.get('startTime')?.touched && appointmentForm.get('startTime')?.hasError('required')">
+        Start Time is required.
+      </div>
     </div>
+
     <div class="mb-3">
       <label>End Time</label>
       <input type="datetime-local" class="form-control w-50" formControlName="endTime">
+      <div class="text-danger" 
+           *ngIf="appointmentForm.get('endTime')?.touched && appointmentForm.get('endTime')?.hasError('required')">
+        End Time is required.
+      </div>
     </div>
-    <button class="btn btn-primary" type="submit">
+
+    <button class="btn btn-primary" type="submit" [disabled]="appointmentForm.invalid">
       {{ editMode ? 'Update' : 'Book' }}
     </button>
   </form>

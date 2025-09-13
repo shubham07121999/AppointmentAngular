@@ -30,6 +30,7 @@ export class AppointmentListComponent {
     if (confirm("Are you sure you want to cancel?")) {
       this.appointmentService.deleteAppointment(id).subscribe(() => {
         this.loadAppointments();
+        alert("Appointment deleted successfully.");
       });
     }
   }
